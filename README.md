@@ -5,3 +5,4 @@ React+TypeScriptなWebアプリで、R3Fのtutorial16。(3Dモデル表示)GLTFl
 
 下記に公開
 https://aaaa1597.github.io/react-r3f-tutorial016/
+デカいので、マウスホイールで小さくしてね。

@@ -15,7 +15,7 @@ const Floor = () => {
 }
 
 const App = () => {
-  const gltf = useLoader(GLTFLoader, '/models/Totoro.glb')
+  const gltf = useLoader(GLTFLoader, 'models/Totoro.glb')
 
   return (
     <div style={{ width: "75vw", height: "75vh" }}>

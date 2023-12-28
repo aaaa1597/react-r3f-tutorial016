@@ -21,7 +21,7 @@ const App = () => {
     <div style={{ width: "75vw", height: "75vh" }}>
       <Canvas camera={{ position: [4, 4, 3] }} shadows>
         <directionalLight position={[3.3, 1.0, 4.4]} intensity={Math.PI * 2} castShadow/>
-        <primitive object={gltf.scene} position={[0, 1, 0]} children-0-castShadow/>
+        <primitive object={gltf.scene} position={[0, 1, 0]} scale={[0.1, 0.1, 0.1]} children-0-castShadow/>
         <Floor />
         <OrbitControls />
         <axesHelper args={[5]} />

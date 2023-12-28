@@ -1,6 +1,6 @@
 {
-  "name": "react-r3f-tutorial017",
-  "homepage": "https://aaaa1597.github.io/react-r3f-tutorial017",
+  "name": "react-r3f-tutorial016",
+  "homepage": "https://aaaa1597.github.io/react-r3f-tutorial016",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -47,7 +47,7 @@
       "last 1 safari version"
     ]
   },
-  "description": "React+TypeScriptのプロジェクト雛形です。",
+  "description": "React+TypeScriptでWeb 3D表示",
   "main": "index.js",
   "devDependencies": {
     "eslint-config-prettier": "^9.1.0",

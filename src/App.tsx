@@ -1,9 +1,56 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import './App.css';
-import { Canvas, useLoader } from '@react-three/fiber'
+import { Canvas, useFrame, MeshProps, useLoader } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Stats, OrbitControls } from '@react-three/drei'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { useControls } from 'leva'
+
+
+const Lights = () => {
+  const directionalRef = useRef<THREE.DirectionalLight>(null!)
+
+  useControls('Directional Light', {
+    intensity: {
+      value: 1, min: 0, max: 5, step: 0.1,
+      onChange: (v) => {
+        directionalRef.current.intensity = v
+      },
+    },
+    position: {
+      value: [3.3,1.0,4.4],
+      onChange: (v) => {
+        directionalRef.current.position.x = v[0]
+        directionalRef.current.position.y = v[1]
+        directionalRef.current.position.z = v[2]
+      },
+    },
+  })
+  
+  return (
+    <directionalLight ref={directionalRef} castShadow />
+  )
+}
+
+type BoxProps = {
+  props: MeshProps;
+  wireframe?: boolean;
+}
+
+const Box = (boxprops: BoxProps) => {
+  const ref = useRef<THREE.Mesh>(null!)
+
+  useFrame((_, delta) => {
+    if( !ref.current) return
+    ref.current.rotation.x += 1 * delta
+    ref.current.rotation.y += 0.5 * delta
+  })
+
+  return (
+    <mesh {...boxprops.props} ref={ref}>
+      <boxGeometry />
+    </mesh>
+  )
+}
 
 const Floor = () => {
   return (
@@ -15,13 +62,16 @@ const Floor = () => {
 }
 
 const App = () => {
-  const gltf = useLoader(GLTFLoader, 'models/Totoro.glb')
+  const texture = useLoader(THREE.TextureLoader, './imgs/grid.png')
 
   return (
     <div style={{ width: "75vw", height: "75vh" }}>
       <Canvas camera={{ position: [4, 4, 3] }} shadows>
-        <directionalLight position={[3.3, 1.0, 4.4]} intensity={Math.PI * 2} castShadow/>
-        <primitive object={gltf.scene} position={[0, 1, 0]} scale={[0.1, 0.1, 0.1]} children-0-castShadow/>
+        <Lights />
+        <Box props={{position:[3, 1, 0], name:"meshBasicMaterial",    material: new THREE.MeshBasicMaterial({ map: texture })}}/>
+        <Box props={{position:[1, 1, 0], name:"meshNormalMaterial",   material: new THREE.MeshNormalMaterial({flatShading: true,})}}/>
+        <Box props={{position:[1, 3, 0], name:"meshPhongMaterial",    material: new THREE.MeshPhongMaterial({flatShading: true, map: texture,})}}/>
+        <Box props={{position:[3, 3, 0], name:"MeshStandardMaterial", material: new THREE.MeshStandardMaterial({flatShading: true, map: texture,})}}/>
         <Floor />
         <OrbitControls />
         <axesHelper args={[5]} />
